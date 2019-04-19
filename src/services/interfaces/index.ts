@@ -154,7 +154,7 @@ export interface Active {
 
 export interface KfParam {
     active: Active;
-    next?: any;
+    next: Active;
     custom: boolean;
 }
 

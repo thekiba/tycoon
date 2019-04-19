@@ -106,6 +106,12 @@ var fetch = fetch ? fetch : require('node-fetch');
 // апгрейд
 // fetch("https://game.web-tycoon.com/api/hostings/PLAYER_ID/2/change?access_token=ACCESS_TOKEN&connectionId=CONNECTION_ID&ts=1555655495898", {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","content-type":"application/json;charset=UTF-8","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/PLAYER_ID/sites/5cb64ba514b57b25f13c9846","referrerPolicy":"no-referrer-when-downgrade","body":"{\"siteId\":\"5cb64ba514b57b25f13c9846\"}","method":"POST","mode":"cors"});
 
+// оплата хостинга
+// fetch("https://game.web-tycoon.com/api/hostings/5cb555c4adc1f41d6a813939/5cb6515e2d2d5625b6b3e609/payInAdvance?access_token=ACCESS_TOKEN&connectionId=connectionId&ts=1555711801484", {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/5cb555c4adc1f41d6a813939/sites/5cb6515e2d2d5625b6b3e609","referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"POST","mode":"cors"});
+
+// перепланировать задачи
+// fetch("https://game.web-tycoon.com/api/sitekfparams/5cb555c4adc1f41d6a813939/5cb5570a4d7b1b1d2c30c4b4/add?access_token=wn5CuJG3b6FTfvSfQqkPkw962LbD4jrEadUMOBWYLdzvTVGAV5QWMXj0nWHSuCeK&connectionId=8b95d41390fbcce61fff54ad5ccf0673&ts=1555714183980", {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","content-type":"application/json;charset=UTF-8","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/5cb555c4adc1f41d6a813939/sites/5cb5570a4d7b1b1d2c30c4b4","referrerPolicy":"no-referrer-when-downgrade","body":"{\"params\":{\"design\":34,\"frontend\":33,\"backend\":33}}","method":"POST","mode":"cors"});
+
 // id: "5cb62514b0f273257557416f"
 // personId: "PLAYER_ID"
 // siteId: "5cb5894e5c1ff61d221829d0"
@@ -214,6 +220,16 @@ export class Api {
   changeHosting(site: Site, hosting: 1 | 2 | 3): Promise<FindAdResponse> {
     return this.request(`https://game.web-tycoon.com/api/hostings/${this.player}/${hosting}/change`, 'POST', {
       siteId: site.id
+    });
+  }
+
+  payForHosting(site: Site): Promise<FindAdResponse> {
+    return this.request(`https://game.web-tycoon.com/api/hostings/${this.player}/${site.id}/payInAdvance`, 'POST');
+  }
+
+  normalizeSite(site: Site): Promise<FindAdResponse> {
+    return this.request(`https://game.web-tycoon.com/api/sitekfparams/${this.player}/${site.id}/add`, 'POST', {
+      params: { backend: 33, frontend: 33, design: 34 }
     });
   }
 

@@ -8,19 +8,32 @@ import { Game, GameBehavior } from '../helpers';
 })
 @injectable()
 export class StartLevelUpGame implements GameBehavior {
-  state: InitResponse;
   constructor(
     @inject(DomainConfig) readonly config: DomainConfig,
     @inject(DomainService) readonly domain: DomainService
   ) {}
 
   async start(): Promise<void> {
-    this.state = await this.domain.init();
+    await this.domain.init();
+
     console.log(`
-      Balance: ${this.state.person.balanceUsd}\$
-      Level:   ${this.state.person.level}
-      Exp:     ${this.state.person.score} of ${this.state.person.nextScore}
+      Balance: ${this.domain.state.state.person.balanceUsd}\$
+      Level:   ${this.domain.state.state.person.level}
+      Exp:     ${this.domain.state.state.person.score} of ${this.domain.state.state.person.nextScore}
     `);
+
+    for (const site of this.domain.site.getAll()) {
+      if (this.domain.site.canPayForHosting(site)) {
+        if (site.hostingId === 2 && this.domain.state.state.person.balanceUsd > 35000) {
+          console.log(`Payment $350 invoke for ${site.domain} hosting!`);
+          await this.domain.site.payForHosting(site);
+        }
+      }
+      if (this.domain.site.canNormalizeSite(site)) {
+        console.log(`Site ${site.domain} has been normalized!`);
+        await this.domain.site.normalizeSite(site);
+      }
+    }
 
     for (const worker of this.domain.worker.getAll()) {
       if (this.domain.worker.isWorking(worker)) {
