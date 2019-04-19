@@ -1,0 +1,28 @@
+{
+  "name": "tycoon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "ts-node src/index.ts",
+    "debug": "node --inspect=0.0.0.0 --require ts-node/register --require tsconfig-paths/register src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inversify": "^5.0.1",
+    "node-fetch": "^2.3.0",
+    "webpack": "^4.30.0"
+  },
+  "devDependencies": {
+    "@types/node": "^11.13.5",
+    "reflect-metadata": "^0.1.13",
+    "ts-loader": "^5.3.3",
+    "ts-node": "^8.1.0",
+    "tsconfig-paths": "^3.8.0",
+    "typescript": "^3.4.3",
+    "webpack-cli": "^3.3.0"
+  }
+}

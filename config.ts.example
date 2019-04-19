@@ -1,0 +1,10 @@
+import { DomainConfig } from './src/services';
+
+export const options: DomainConfig = {
+  player: 'PLAYER_ID',
+  access_token: 'ACCESS_TOKEN',
+  connectionId: 'CONNECTION_ID',
+  mainDomain: 'MAIN_DOMAIN.com',
+  sitePrefix: 'SITE_PREFIX',
+  sitePostfix: 'SITE_POSTFIX'
+};

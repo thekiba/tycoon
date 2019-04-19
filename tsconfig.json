@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "esnext",
+    "sourceMap": true,
+    "outDir": "./dist/",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
