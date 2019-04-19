@@ -1,6 +1,8 @@
 import { DomainConfig } from './src/services';
 
 export const options: DomainConfig = {
+  author: 'YOUR_NICKNAME',
+  game: 'YOUR_STRATEGY',
   player: 'PLAYER_ID',
   access_token: 'ACCESS_TOKEN',
   connectionId: 'CONNECTION_ID',

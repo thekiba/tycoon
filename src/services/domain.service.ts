@@ -3,7 +3,10 @@ import { Api, ApiConfig} from './api/api';
 import { AdService, ContentService, StateService, SiteService, TasksService, WorkerService } from './domains';
 import { InitResponse } from './interfaces';
 
-export class DomainConfig extends ApiConfig {}
+export class DomainConfig extends ApiConfig {
+  author: string;
+  game: string;
+}
 
 @injectable()
 export class DomainService {
