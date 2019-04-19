@@ -116,11 +116,11 @@ export class WorkerService {
     return done;
   }
 
-  async doWork(worker: Worker, site: Site): Promise<InitResponse> {
+  async doWork(worker: Worker, site: Site, specialty?: Specialty): Promise<InitResponse> {
     requires(worker, new RangeError('worker'));
     requires(site, new RangeError('site'));
 
-    const workType = this.getSpecialty(worker);
+    const workType = specialty || this.getSpecialty(worker);
     const task: Task = await this.api.addWorker(site, [ worker ], workType) as any;
     return this.state = {
       ...this.state,

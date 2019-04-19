@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { Helpers, requires } from '../../utils';
 import { Api, ApiConfig } from '../api/api';
 import { Specialty } from '../enums';
-import { Ad, Content, InitResponse, Site, Task } from '../interfaces';
+import {Ad, Content, CreateSiteResponse, InitResponse, Site, Task} from '../interfaces';
 import { AdService } from './ad.service';
 import { ContentService } from './content.service';
 import { StateService } from './state.service';
@@ -41,6 +41,10 @@ export class SiteService {
     return site.progress[ workName ] < site.limit[ workName ];
   }
 
+  createSite(domain: string): Promise<CreateSiteResponse> {
+    return this.api.createSite(domain);
+  }
+
   getSortedSites(direction: 'asc' | 'desc' = 'asc', byField: keyof Site = 'level'): Site[] {
     requires([ 'asc', 'desc' ].includes(direction), new RangeError('site'));
     requires(byField, new RangeError('byField'));
@@ -62,6 +66,10 @@ export class SiteService {
 
     return site.content.some((content) =>
       this.content.isDisabled(content));
+  }
+
+  hasContent(site: Site): boolean {
+    return this.hasActivedContent(site) || this.hasDisabledContent(site);
   }
 
   canLevelUp(site: Site): boolean {
@@ -219,6 +227,7 @@ export class SiteService {
     );
   }
 
+
   canPayForHosting(site: Site): boolean {
     requires(site, new RangeError('site'));
 
@@ -252,5 +261,6 @@ export class SiteService {
       }
     };
   }
+
 }
 

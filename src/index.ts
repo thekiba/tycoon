@@ -17,14 +17,9 @@ import { sleep } from './utils';
     try {
       const game = container.get(GameRunner);
 
-      // await game.createSites();
-      // await sleep(10000);
-
       await game.start();
       await sleep(10000);
 
-      // await game.createLinks();
-      // return;
     } catch (e) {
       console.error(e);
       console.info('Restart after 2 minutes');
