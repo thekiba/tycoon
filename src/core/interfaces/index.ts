@@ -2975,7 +2975,7 @@ export interface ValueItem {
     target: string;
     action: string;
     id?: string;
-    value: Value;
+    value: any;
 }
 export interface Value {
     status?: number;
@@ -3151,7 +3151,7 @@ export interface ValueItem {
     target: string;
     action: string;
     id?: string;
-    value: Value;
+    value: any;
 }
 export interface Value {
     hostingId?: number;

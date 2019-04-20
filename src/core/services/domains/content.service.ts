@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
-import { Api, ApiConfig } from '../api/api';
-import { Content, InitResponse } from '../interfaces';
+import { Api, ApiConfig } from '../../api';
+import { Content, InitResponse } from '../../interfaces';
 import { StateService } from './state.service';
 
 @injectable()

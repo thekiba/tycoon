@@ -1,6 +1,4 @@
-import { interfaces } from 'inversify';
-import Container = interfaces.Container;
-
+import { Container } from 'inversify';
 import { GameRunner } from './game.runner';
 
 export * from './game.behavior';

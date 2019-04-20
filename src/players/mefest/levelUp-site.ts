@@ -1,8 +1,5 @@
-import {Game, GameBehavior} from "../helpers";
-import {inject, injectable} from "inversify";
-import {Api} from "../../services/api/api";
-import {DomainConfig, DomainService, Site, Specialty} from "../../services";
-import {Ad} from "../../services/interfaces";
+import { Ad, Api, DomainConfig, DomainService, Game, GameBehavior, Site, Specialty } from '@tycoon/core';
+import { inject, injectable } from 'inversify';
 
 @Game({author: 'mefest', name: 'levelUp-site'})
 

@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
 import { requires } from '../../utils';
-import { Api, ApiConfig } from '../api/api';
-import { Specialty } from '../enums';
-import { InitResponse, Site, Task, Worker } from '../interfaces';
+import { Api, ApiConfig } from '../../api';
+import { Specialty } from '../../enums';
+import { InitResponse, Site, Task, Worker } from '../../interfaces';
 import { ContentService } from './content.service';
 import { SiteService } from './site.service';
 import { StateService } from './state.service';

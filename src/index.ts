@@ -1,26 +1,28 @@
-import "reflect-metadata";
+import 'reflect-metadata';
+import { CancellationToken, containerModule as core, GameRunner, sleep } from '@tycoon/core';
 import { Container } from 'inversify';
 import { options } from '../config';
-import { containerModule as players, GameRunner } from './players';
-import { containerModule as services, DomainConfig } from './services';
-import { ApiConfig } from './services/api/api';
-import { sleep } from './utils';
+import { containerModule as players } from './players';
 
 (async () => {
   const container = new Container();
-  container.bind(DomainConfig).toConstantValue(options);
-  container.bind(ApiConfig).toConstantValue(options);
-  services(container);
-  players(container);
-
+  let gameRunner: GameRunner;
   while (true) {
     try {
-      const game = container.get(GameRunner);
+      if (!gameRunner) {
+        const cancellationToken = new CancellationToken();
+        cancellationToken.finally(() => {
+          throw new Error(`Cancelled!`);
+        });
 
-      await game.start();
-      await sleep(10000);
-
+        container.unbindAll();
+        core(container, options, cancellationToken);
+        players(container);
+        gameRunner = container.get(GameRunner);
+      }
+      await gameRunner.start();
     } catch (e) {
+      gameRunner = null;
       console.error(e);
       console.info('Restart after 2 minutes');
       await sleep(120000);

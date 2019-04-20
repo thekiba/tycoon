@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
-import { Api, ApiConfig} from './api/api';
-import { AdService, ContentService, StateService, SiteService, TasksService, WorkerService } from './domains';
-import { InitResponse } from './interfaces';
+import { Api, ApiConfig } from '../api';
+import { InitResponse } from '../interfaces';
+import { AdService, ContentService, SiteService, StateService, TasksService, WorkerService } from './domains';
 
 export class DomainConfig extends ApiConfig {
   author: string;

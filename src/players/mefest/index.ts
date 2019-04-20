@@ -1,8 +1,8 @@
+import { GameBehavior } from '@tycoon/core';
 import { Container } from 'inversify';
-import {ShowSiteGame} from "./show-site";
-import {GameBehavior} from "../helpers";
-import {CreateSiteGame} from "./create-site";
-import {LevelUpSiteGame} from "./levelUp-site";
+import { CreateSiteGame } from './create-site';
+import { LevelUpSiteGame } from './levelUp-site';
+import { ShowSiteGame } from './show-site';
 
 export function containerModule(container: Container): void {
     container.bind(GameBehavior).to(ShowSiteGame);

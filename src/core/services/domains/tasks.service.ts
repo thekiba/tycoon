@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { requires } from '../../utils';
-import { Api, ApiConfig } from '../api/api';
-import { InitResponse, Site, Task } from '../interfaces';
+import { Api, ApiConfig } from '../../api';
+import { InitResponse, Site, Task } from '../../interfaces';
 import { SiteService } from './site.service';
 import { StateService } from './state.service';
 

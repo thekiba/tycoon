@@ -1,7 +1,5 @@
+import { DomainConfig, DomainService, Game, GameBehavior, InitResponse } from '@tycoon/core';
 import { inject, injectable } from 'inversify';
-import { DomainConfig, DomainService } from '../../services';
-import { InitResponse } from '../../services/interfaces';
-import { Game, GameBehavior } from '../helpers';
 
 @Game({
   author: 'thekiba',

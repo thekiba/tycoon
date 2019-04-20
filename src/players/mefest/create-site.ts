@@ -1,7 +1,5 @@
-import {Game, GameBehavior} from "../helpers";
-import {inject, injectable} from "inversify";
-import {Api} from "../../services/api/api";
-import {DomainConfig, DomainService} from "../../services";
+import { Api, DomainConfig, DomainService, Game, GameBehavior } from '@tycoon/core';
+import { inject, injectable } from 'inversify';
 
 @Game({author: 'mefest', name: 'create-site'})
 

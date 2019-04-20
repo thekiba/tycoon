@@ -1,4 +1,4 @@
-import { requires } from '../../utils';
+import { requires } from '../utils';
 import { GameBehavior } from './game.behavior';
 
 const SecretToken = Symbol('Game Config Token');
@@ -6,13 +6,16 @@ const SecretToken = Symbol('Game Config Token');
 export interface GameConfig {
   name: string;
   author: string;
+  waiting?: number;
 }
 
 export function Game(config: GameConfig): ClassDecorator {
+  config.waiting = config.waiting || 10000;
   return (target) => {
     requires(config, new RangeError(`Should be defined 'config' for ${target.constructor.name} game.`));
     requires(config.author, new RangeError(`Should be defined 'config.author' for ${target.constructor.name} game.`));
     requires(config.name, new RangeError(`Should be defined 'config.name' for ${target.constructor.name} game.`));
+    requires(typeof config.waiting === 'number' && config.waiting >= 0, new RangeError(`Should 'config.name' be greater than or equals to 0 for ${target.constructor.name} game.`));
 
     Reflect.defineMetadata("game:config", config, target, SecretToken);
     return target;

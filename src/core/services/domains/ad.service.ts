@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { Helpers, requires } from '../../utils';
-import { Api, ApiConfig } from '../api/api';
-import { Ad, InitResponse, Site } from '../interfaces';
+import { Api, ApiConfig } from '../../api';
+import { Ad, InitResponse, Site } from '../../interfaces';
 import { StateService } from './state.service';
 
 export interface AdStat {

@@ -1,12 +1,18 @@
-import { interfaces } from 'inversify';
-import { GameBehavior } from '../helpers';
-import { CreateSitesGame } from './create-sites';
+import { GameBehavior } from '@tycoon/core';
+import { Container } from 'inversify';
 import { CreateLinksGame } from './create-links';
+import { CreateSitesGame } from './create-sites';
+import { SandboxGame } from './sandbox';
 import { StartLevelUpGame } from './start-level-up';
-import Container = interfaces.Container;
+
+const behaviors: { new (...args: any[]): GameBehavior }[] =
+  [ CreateSitesGame,
+    CreateLinksGame,
+    StartLevelUpGame,
+    SandboxGame ];
 
 export function containerModule(container: Container): void {
-  container.bind(GameBehavior).to(CreateSitesGame);
-  container.bind(GameBehavior).to(CreateLinksGame);
-  container.bind(GameBehavior).to(StartLevelUpGame);
+  for (const behavior of behaviors) {
+    container.bind(GameBehavior).to(behavior);
+  }
 }
