@@ -1,3 +1,4 @@
+import { requires } from '../../utils';
 import { inject, injectable } from 'inversify';
 import { Api, ApiConfig, WebsocketService } from '../../api';
 import { InitResponse } from '../../interfaces';
@@ -12,12 +13,19 @@ export class StateService {
     @inject(ApiConfig) private config: ApiConfig
   ) {}
 
-  async init(): Promise<InitResponse> {
+  async init(ws?: boolean): Promise<InitResponse> {
+    requires(!this.state, new TypeError(`Already initialized!`));
     this.state = await this.api.init();
-    await this.ws.init({
-      getState: () => this.state,
-      setState: (state: InitResponse) => this.state = state
-    });
+    if (ws) {
+      await this.ws.init({
+        getState: () => this.state,
+        setState: (state: InitResponse) => this.state = state
+      });
+    }
     return this.state;
+  }
+
+  clear(): void {
+    this.state = undefined;
   }
 }

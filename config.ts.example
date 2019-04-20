@@ -1,4 +1,4 @@
-import { DomainConfig } from './src/services';
+import { DomainConfig } from '@tycoon/core';
 
 export const options: DomainConfig = {
   author: 'YOUR_NICKNAME',

@@ -5,16 +5,15 @@ import { InitResponse } from '../interfaces';
 import { ActionProcessor } from '../processors/action.processor';
 import { ApiConfig } from './api';
 
-export interface Action {
+export interface Action<T = any> {
   target: string;
   action: string;
   id?: string;
-  value: any;
+  value: T;
 }
-interface BatchAction extends Action {
+interface BatchAction extends Action<Action[]> {
   action: 'batch';
   target: 'batch';
-  value: Action[];
 }
 
 @injectable()
@@ -51,9 +50,7 @@ export class WebsocketService {
     ws.on('message', (message: string) => this.onMessage(JSON.parse(message)));
 
     this.cancellationToken.finally(() => {
-      if (this.ws.readyState === WebSocket.OPEN) {
-        this.ws.close();
-      }
+      this.ws.close();
     });
 
     return undefined;

@@ -22,8 +22,12 @@ export class DomainService {
     @inject(WorkerService) readonly worker: WorkerService
   ) {}
 
-  async init(): Promise<InitResponse> {
-    return await this.state.init();
+  async init(ws?: boolean): Promise<InitResponse> {
+    return await this.state.init(ws);
+  }
+
+  clear(): void {
+    this.state.clear();
   }
 
 }

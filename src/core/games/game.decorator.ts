@@ -7,15 +7,18 @@ export interface GameConfig {
   name: string;
   author: string;
   waiting?: number;
+  ws?: boolean;
 }
 
 export function Game(config: GameConfig): ClassDecorator {
   config.waiting = config.waiting || 10000;
+  config.ws = config.ws || false;
   return (target) => {
-    requires(config, new RangeError(`Should be defined 'config' for ${target.constructor.name} game.`));
-    requires(config.author, new RangeError(`Should be defined 'config.author' for ${target.constructor.name} game.`));
-    requires(config.name, new RangeError(`Should be defined 'config.name' for ${target.constructor.name} game.`));
-    requires(typeof config.waiting === 'number' && config.waiting >= 0, new RangeError(`Should 'config.name' be greater than or equals to 0 for ${target.constructor.name} game.`));
+    requires(config, new RangeError(`'config' should be defined for ${target.constructor.name} game.`));
+    requires(config.author, new RangeError(`'config.author' should be defined for ${target.constructor.name} game.`));
+    requires(config.name, new RangeError(`'config.name' should be defined for ${target.constructor.name} game.`));
+    requires(typeof config.waiting === 'number' && config.waiting >= 0, new RangeError(`'config.waiting' should be greater than or equals to 0 for ${target.constructor.name} game.`));
+    requires(typeof config.ws === 'boolean', new RangeError(`'config.ws' should be boolean for ${target.constructor.name} game.`));
 
     Reflect.defineMetadata("game:config", config, target, SecretToken);
     return target;

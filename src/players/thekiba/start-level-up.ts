@@ -13,8 +13,6 @@ export class StartLevelUpGame implements GameBehavior {
   ) {}
 
   async start(): Promise<void> {
-    await this.domain.init();
-
     console.log(`
       Balance: ${this.domain.state.state.person.balanceUsd}\$
       Level:   ${this.domain.state.state.person.level}
