@@ -6,13 +6,7 @@
     "sourceMap": true,
     "outDir": "./dist/core",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "baseUrl": ".",
-    "paths": {
-      "@tycoon/core": [
-        "../core/index"
-      ]
-    }
+    "emitDecoratorMetadata": true
   },
   "files": [
     "./"

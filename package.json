@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "start": "ts-node --project src/players/tsconfig.json --require tsconfig-paths/register src/index.ts",
+    "start": "ts-node --require tsconfig-paths/register src/index.ts",
     "debug": "node --inspect=0.0.0.0 --require ts-node/register --require tsconfig-paths/register src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,6 +25,7 @@
     "ts-loader": "^5.3.3",
     "ts-node": "^8.1.0",
     "tsconfig-paths": "^3.8.0",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.4.3",
     "webpack-cli": "^3.3.0"
   }

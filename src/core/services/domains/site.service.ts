@@ -221,10 +221,14 @@ export class SiteService {
     return this.getProfitPerHour(site) / this.getTraffic(site);
   }
 
+  getSortedSitesByTraffic(): Site[] {
+    return this.getAll().sort((a, b) =>
+      this.getTraffic(a) - this.getTraffic(b));
+  }
+
   getSortedSitesByProfitPerUser(): Site[] {
     return this.getAll().sort((a, b) =>
-      this.getProfitPerUser(b) - this.getProfitPerUser(a)
-    );
+      this.getProfitPerUser(b) - this.getProfitPerUser(a));
   }
 
 

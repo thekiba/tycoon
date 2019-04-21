@@ -57,7 +57,7 @@ export class StartLevelUpGame implements GameBehavior {
 
           case Specialty.marketing: {
             site =
-              this.domain.site.getSortedSitesByProfitPerUser()
+              this.domain.site.getSortedSitesByTraffic()
                   .find((site) =>
                     !this.domain.site.hasActivedContent(site) &&
                     !this.domain.site.hasDisabledContent(site)
