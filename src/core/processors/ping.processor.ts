@@ -11,7 +11,7 @@ export class PingActionProcessor extends ActionProcessor<PingAction> {
     return action.target === 'ping';
   }
 
-  onProcessAction(state: InitResponse, action: Action): InitResponse {
+  onProcessAction(state: InitResponse, action: PingAction): InitResponse {
     return state;
   }
 }

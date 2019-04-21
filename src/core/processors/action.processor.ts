@@ -8,5 +8,5 @@ export { Action } from '../api';
 export abstract class ActionProcessor<T extends Action> {
   abstract isForActionType(action: Action): action is T;
 
-  abstract onProcessAction(state: InitResponse, action: Action): InitResponse;
+  abstract onProcessAction(state: InitResponse, action: T): InitResponse;
 }

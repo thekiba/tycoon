@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { CancellationToken, containerModule as core, GameRunner, sleep } from '@tycoon/core';
+import { CancellationToken, containerModule as core, GameRunner, sleep } from './core';
 import { Container } from 'inversify';
 import { options } from '../config';
 import { containerModule as players } from './players';

@@ -11,7 +11,7 @@ export class ConnectionActionProcessor extends ActionProcessor<ConnectionAction>
     return action.target === 'connectionId';
   }
 
-  onProcessAction(state: InitResponse, action: Action): InitResponse {
+  onProcessAction(state: InitResponse, action: ConnectionAction): InitResponse {
     return state;
   }
 }

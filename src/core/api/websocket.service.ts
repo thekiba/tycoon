@@ -4,6 +4,7 @@ import { CancellationToken } from '../cancellation.token';
 import { InitResponse } from '../interfaces';
 import { ActionProcessor } from '../processors/action.processor';
 import { ApiConfig } from './api';
+import produce from "immer";
 
 export interface Action<T = any> {
   target: string;
@@ -82,7 +83,9 @@ export class WebsocketService {
     if (!processor) {
       return console.log(`Can't find processor for action ${action.target}:${action.action}!`);
     } else {
-      this.state = processor.onProcessAction(this.state, action);
+      this.state = produce(this.state, (state) => {
+        processor.onProcessAction(state, action);
+      });
     }
   }
 

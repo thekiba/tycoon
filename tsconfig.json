@@ -6,12 +6,7 @@
     "outDir": "./dist/",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "baseUrl": ".",
-    "paths": {
-      "@tycoon/core": [
-        "src/core/index"
-      ]
-    }
+    "baseUrl": "."
   },
   "exclude": [
     "node_modules"

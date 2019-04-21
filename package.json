@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "start": "ts-node --require tsconfig-paths/register src/index.ts",
+    "start": "ts-node --project src/players/tsconfig.json --require tsconfig-paths/register src/index.ts",
     "debug": "node --inspect=0.0.0.0 --require ts-node/register --require tsconfig-paths/register src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

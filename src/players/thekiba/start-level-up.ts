@@ -3,7 +3,8 @@ import { inject, injectable } from 'inversify';
 
 @Game({
   author: 'thekiba',
-  name: 'start-level-up'
+  name: 'start-level-up',
+  ws: false
 })
 @injectable()
 export class StartLevelUpGame implements GameBehavior {

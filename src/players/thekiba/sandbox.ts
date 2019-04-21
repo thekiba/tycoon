@@ -7,7 +7,8 @@ const repl = require('repl');
 @Game({
   author: 'thekiba',
   name: 'sandbox',
-  waiting: 0
+  waiting: 0,
+  ws: true
 })
 @injectable()
 export class SandboxGame implements GameBehavior {

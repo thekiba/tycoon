@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "esnext",
+    "sourceMap": true,
+    "outDir": "./dist/core",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "paths": {
+      "@tycoon/core": [
+        "../core/index"
+      ]
+    }
+  },
+  "files": [
+    "./"
+  ]
+}
