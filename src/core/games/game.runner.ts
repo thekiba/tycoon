@@ -1,5 +1,6 @@
 import { inject, injectable, multiInject } from 'inversify';
-import { DomainConfig, DomainService } from '../services';
+import { DomainConfig } from '../config';
+import { DomainService } from '../services';
 import { requires, sleep } from '../utils';
 import { GameBehavior } from './game.behavior';
 import { readGameConfig } from './game.decorator';

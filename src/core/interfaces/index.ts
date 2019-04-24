@@ -3075,6 +3075,8 @@ export interface InitResponse {
     person: Person;
     workers: Worker[];
     sites: Site[];
+    extraSites: Site[];
+    extraAds: Ad[];
     educationMarket: EducationMarket;
     energyMarket: EnergyMarket;
     gadgetMarket: GadgetMarket;

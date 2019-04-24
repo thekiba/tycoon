@@ -8,5 +8,6 @@ export const options: DomainConfig = {
   connectionId: 'CONNECTION_ID',
   mainDomain: 'MAIN_DOMAIN.com',
   sitePrefix: 'SITE_PREFIX',
-  sitePostfix: 'SITE_POSTFIX'
+  sitePostfix: 'SITE_POSTFIX',
+  friendId: 'FRIEND_PLAYER_ID'
 };

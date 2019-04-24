@@ -33,6 +33,10 @@ export class SiteService {
     return this.state.sites;
   }
 
+  getExtraAll(): Site[] {
+    return this.state.extraSites;
+  }
+
   hasUncompletedWork(site: Site, specialty: Specialty): boolean {
     requires(site, new RangeError('site'));
     requires(specialty >= 1 && specialty <= 5, new RangeError('specialty'));
@@ -140,7 +144,22 @@ export class SiteService {
     requires(site, new RangeError('site'));
     requires(ad, new RangeError('ad'));
 
-    await this.api.addAd(ad);
+    await this.api.addAd(ad, site);
+
+    if (site.id === ad.siteId) {
+      // Todo: implements this
+    } else {
+      // this.state = {
+      //   ...this.state,
+      //   sites: [
+      //     ...this.state.sites.filter((site) => site.id !== ad.siteId),
+      //     {
+      //       ...site,
+      //       ad: [ ...site.ad, {...ad, siteId: site.id} ]
+      //     }
+      //   ]
+      // };
+    }
   }
 
   async changeHosting(site: Site, hosting: 1 | 2 | 3): Promise<void> {

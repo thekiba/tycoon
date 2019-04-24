@@ -1,12 +1,10 @@
 import { inject, injectable } from 'inversify';
-import { Api, ApiConfig } from '../api';
+import { Api, WebsocketService } from '../api';
+import { DomainConfig } from '../config';
+import { AdDataService } from '../data';
 import { InitResponse } from '../interfaces';
-import { AdService, ContentService, SiteService, StateService, TasksService, WorkerService } from './domains';
+import { AdService, ContentService, SiteService, StateService, TasksService, UserService, WorkerService } from './domains';
 
-export class DomainConfig extends ApiConfig {
-  author: string;
-  game: string;
-}
 
 @injectable()
 export class DomainService {
@@ -19,11 +17,22 @@ export class DomainService {
     @inject(AdService) readonly ad: AdService,
     @inject(SiteService) readonly site: SiteService,
     @inject(TasksService) readonly task: TasksService,
-    @inject(WorkerService) readonly worker: WorkerService
+    @inject(UserService) readonly user: UserService,
+    @inject(WorkerService) readonly worker: WorkerService,
+    @inject(AdDataService) readonly adDataService: AdDataService,
+    @inject(WebsocketService) private ws: WebsocketService,
   ) {}
 
   async init(ws?: boolean): Promise<InitResponse> {
-    return await this.state.init(ws);
+    await this.state.init();
+    if (ws) {
+      await this.ws.init({
+        getState: () => this.state.state,
+        setState: (state: InitResponse) => this.state.state = state
+      });
+    }
+    await this.adDataService.init();
+    return this.state.state;
   }
 
   clear(): void {

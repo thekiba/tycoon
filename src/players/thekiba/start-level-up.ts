@@ -100,9 +100,9 @@ export class StartLevelUpGame implements GameBehavior {
 
     for (const site of this.domain.site.getAll()) {
       if (this.domain.site.getAdsCount(site) === 3) {
-        for (const ad of this.domain.site.getDisabledAds(site)) {
-          await this.domain.site.enableAd(site, ad);
-        }
+        // for (const ad of this.domain.site.getDisabledAds(site)) {
+        //   await this.domain.site.enableAd(site, ad);
+        // }
 
         // const ads = this.domain.site.getAds(site).map((ad) => ({
         //   ...ad, ...this.domain.ad.getAdStats(site, ad) })
@@ -123,11 +123,11 @@ export class StartLevelUpGame implements GameBehavior {
         // }
       }
 
-      if (this.domain.site.getAdsCount(site) < 3) {
-        if (!this.domain.site.hasFindAdTask(site)) {
-          await this.domain.site.researchAd(site);
-        }
-      }
+      // if (this.domain.site.getAdsCount(site) < 3) {
+      //   if (!this.domain.site.hasFindAdTask(site)) {
+      //     await this.domain.site.researchAd(site);
+      //   }
+      // }
     }
   }
 }

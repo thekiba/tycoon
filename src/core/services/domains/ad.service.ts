@@ -26,6 +26,10 @@ export class AdService {
     @inject(StateService) private stateService: StateService
   ) {}
 
+  getExtraAll(): Ad[] {
+    return this.state.extraAds;
+  }
+
   isEnabled(ad: Ad): boolean {
     requires(ad, new RangeError('ad'));
 
@@ -38,11 +42,11 @@ export class AdService {
     return ad.status === 0;
   }
 
-  getAdStats(site: Site, ad: Ad): AdStat {
+  getAdStats(site: Site, ad: Ad): Ad & AdStat {
     requires(site, new RangeError('site'));
     requires(ad, new RangeError('ad'));
 
-    return adData(site, ad);
+    return { ...ad, ...adData(site, ad) };
   }
 
   async delete(ad: Ad): Promise<InitResponse> {
@@ -50,16 +54,24 @@ export class AdService {
 
     await this.api.deleteAd(ad);
     const site = this.state.sites.find((site) => site.id === ad.siteId);
-    return this.state = {
-      ...this.state,
-      sites: [
-        ...this.state.sites.filter((site) => site.id !== ad.siteId),
-        {
-          ...site,
-          ad: site.ad.filter((a) => a.id !== ad.id)
-        }
-      ]
-    };
+    if (site) {
+      return this.state = {
+        ...this.state,
+        sites: [
+          ...this.state.sites.filter((site) => site.id !== ad.siteId),
+          {
+            ...site,
+            ad: site.ad.filter((a) => a.id !== ad.id)
+          }
+        ]
+      };
+    } else {
+      return this.state;
+    }
+  }
+
+  getAllAds(sites: Site[]): Ad[] {
+    return [].concat(...sites.map((site) => site.ad));
   }
 }
 

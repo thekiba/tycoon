@@ -67,8 +67,7 @@ var fetch = fetch ? fetch : require('node-fetch');
 // fetch("https://game.web-tycoon.com/api/ad_s/ad/PLAYER_ID/generateOffers/5cb6202014b57b25f13b75d2/1?access_token=ACCESS_TOKEN&connectionId=CONNECTION_ID&ts=1555440683971", {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/PLAYER_ID/sites/5cb6202014b57b25f13b75d2","referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"POST","mode":"cors"});
 
 // запуск рекламы
-// fetch("https://game.web-tycoon.com/api/ad_s/PLAYER_ID/5cb6202014b57b25f13b75d2/add?access_token=ACCESS_TOKEN&connectionId=CONNECTION_ID&ts=1555441138266",
-// {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","content-type":"application/json;charset=UTF-8","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/PLAYER_ID/sites/5cb6202014b57b25f13b75d2","referrerPolicy":"no-referrer-when-downgrade","body":"{\"adId\":\"5cb62559e3685a24102becaf\"}","method":"POST","mode":"cors"});
+// fetch("https://game.web-tycoon.com/api/ad_s/PLAYER_ID/5cb6202014b57b25f13b75d2/add?access_token=ACCESS_TOKEN&connectionId=CONNECTION_ID&ts=1555441138266", {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","content-type":"application/json;charset=UTF-8","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/PLAYER_ID/sites/5cb6202014b57b25f13b75d2","referrerPolicy":"no-referrer-when-downgrade","body":"{\"adId\":\"5cb62559e3685a24102becaf\"}","method":"POST","mode":"cors"});
 
 // остановка рекламы
 // fetch("https://game.web-tycoon.com/api/ad_s/PLAYER_ID/5cb62559e3685a24102becaf/cancel?access_token=ACCESS_TOKEN&connectionId=CONNECTION_ID&ts=1555441443741",
@@ -96,8 +95,7 @@ var fetch = fetch ? fetch : require('node-fetch');
 // fetch("https://game.web-tycoon.com/api/workers/PLAYER_ID/hire/5cb6c0e6e3685a24102d3256?access_token=ACCESS_TOKEN&connectionId=CONNECTION_ID&ts=1555620438477", {"credentials":"omit","headers":{"accept":"application/json, text/plain, */*"},"referrer":"https://game.web-tycoon.com/players/PLAYER_ID/workers/hire","referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"POST","mode":"cors"});
 
 // добавить контент на сайт
-// fetch("https://game.web-tycoon.com/api/content/PLAYER_ID/5cb56a5d8c37f21c1ca79948/5cb6cd16b55184245fe9eb61?access_token=ACCESS_TOKEN&connectionId=CONNECTION_ID&ts=1555487145824",
-// {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/PLAYER_ID/sites/5cb56a5d8c37f21c1ca79948","referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"POST","mode":"cors"});
+// fetch("https://game.web-tycoon.com/api/content/PLAYER_ID/5cb56a5d8c37f21c1ca79948/5cb6cd16b55184245fe9eb61?access_token=ACCESS_TOKEN&connectionId=CONNECTION_ID&ts=1555487145824", {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/PLAYER_ID/sites/5cb56a5d8c37f21c1ca79948","referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"POST","mode":"cors"});
 
 // завершить таск (может быть платно)
 // fetch("https://game.web-tycoon.com/api/tasks/PLAYER_ID/5cb8e3cef2e5c847fe4e3eba/finish?access_token=ACCESS_TOKEN&connectionId=CONNECTION_ID&ts=1555621003854", {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/PLAYER_ID/workers/hire","referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"POST","mode":"cors"});
@@ -110,6 +108,9 @@ var fetch = fetch ? fetch : require('node-fetch');
 
 // перепланировать задачи
 // fetch("https://game.web-tycoon.com/api/sitekfparams/5cb555c4adc1f41d6a813939/5cb5570a4d7b1b1d2c30c4b4/add?access_token=wn5CuJG3b6FTfvSfQqkPkw962LbD4jrEadUMOBWYLdzvTVGAV5QWMXj0nWHSuCeK&connectionId=8b95d41390fbcce61fff54ad5ccf0673&ts=1555714183980", {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","content-type":"application/json;charset=UTF-8","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/5cb555c4adc1f41d6a813939/sites/5cb5570a4d7b1b1d2c30c4b4","referrerPolicy":"no-referrer-when-downgrade","body":"{\"params\":{\"design\":34,\"frontend\":33,\"backend\":33}}","method":"POST","mode":"cors"});
+
+// получение информации о друге
+// fetch("https://game.web-tycoon.com/api/users/5cb555c4adc1f41d6a813939/5cb32a1943916e1d601810f9/getUserInfo?access_token=wn5CuJG3b6FTfvSfQqkPkw962LbD4jrEadUMOBWYLdzvTVGAV5QWMXj0nWHSuCeK&connectionId=bc50853f9159fbf692d527bfe624fbd4&ts=1556043959629", {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/5cb32a1943916e1d601810f9","referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"GET","mode":"cors"});
 
 // id: "5cb62514b0f273257557416f"
 // personId: "PLAYER_ID"
@@ -230,6 +231,10 @@ export class Api {
     return this.request(`https://game.web-tycoon.com/api/sitekfparams/${this.player}/${site.id}/add`, 'POST', {
       params: { backend: 33, frontend: 33, design: 34 }
     });
+  }
+
+  getUserInfo(userId: string): Promise<InitResponse> {
+    return this.request(`https://game.web-tycoon.com/api/users/${this.player}/${userId}/getUserInfo`, 'GET');
   }
 
   private async request<T>(url, method, body = null): Promise<T> {

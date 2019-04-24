@@ -35,16 +35,3 @@ export class SandboxGame implements GameBehavior {
     });
   }
 }
-
-/**
- * Ads
- */
-const taskIds = [ "5cbae4897cc1386f6633b25c", "5cbae48994f41e6ecb4ce3c8" ];
-const ads = [
-  "5cbae1f26c94056dbfd148b1",
-  "5cbae2206c94056dbfd148ed",
-  "5cbae3966c94056dbfd14be7",
-  "5cbae4c76c94056dbfd14e71",
-  "5cbae4c76c94056dbfd14e73",
-  "5cbae5446c94056dbfd14f84"
-];

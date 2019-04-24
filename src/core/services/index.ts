@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 import { DomainService } from './domain.service';
-import { AdService, ContentService, SiteService, StateService, TasksService, WorkerService } from './domains';
+import { AdService, ContentService, SiteService, StateService, TasksService, UserService, WorkerService } from './domains';
 
 export * from './domain.service';
 
@@ -10,6 +10,7 @@ const services: { new (...args: any[]): any }[] =
     ContentService,
     StateService,
     TasksService,
+    UserService,
     WorkerService,
     DomainService ];
 

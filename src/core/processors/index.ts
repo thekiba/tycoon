@@ -1,6 +1,7 @@
 import { Container } from 'inversify';
 import { ActionProcessor } from './action.processor';
 import { AdActionProcessor } from './ad.processor';
+import { AdExtraActionProcessor } from './ad-extra.processor';
 import { ChatActionProcessor } from './chat.processor';
 import { ConnectionActionProcessor } from './connection.processor';
 import { ContentActionProcessor } from './content.processor';
@@ -15,6 +16,7 @@ import { WorkerActionProcessor } from './worker.processor';
 const processors: { new (...args: any[]): ActionProcessor<any> }[] =
   [
     AdActionProcessor,
+    AdExtraActionProcessor,
     ChatActionProcessor,
     ConnectionActionProcessor,
     ContentActionProcessor,
