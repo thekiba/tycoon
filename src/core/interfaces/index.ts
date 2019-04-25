@@ -3301,3 +3301,17 @@ export interface FindAdResponse {
     version: string;
     shadoWs: ShadoWs;
 }
+
+export interface SendVacationResponse {
+  ok: boolean;
+  serverTime: number;
+  version: string;
+  shadoWs: ShadoWs;
+}
+
+export interface CancelVacationResponse {
+  ok: boolean;
+  serverTime: number;
+  version: string;
+  shadoWs: ShadoWs;
+}

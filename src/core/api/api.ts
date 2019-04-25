@@ -4,12 +4,12 @@ import { Specialty } from '../enums';
 import {
   Ad,
   AddWorkerResponse,
-  CancelTaskResponse,
+  CancelTaskResponse, CancelVacationResponse,
   Content,
   CreateSiteResponse,
   FindAdResponse,
   InitResponse,
-  LevelUpSiteResponse,
+  LevelUpSiteResponse, SendVacationResponse,
   Site,
   Task,
   Worker
@@ -235,6 +235,14 @@ export class Api {
 
   getUserInfo(userId: string): Promise<InitResponse> {
     return this.request(`https://game.web-tycoon.com/api/users/${this.player}/${userId}/getUserInfo`, 'GET');
+  }
+
+  sendVacation(worker: Worker): Promise<SendVacationResponse>{
+    return this.request(`https://game.web-tycoon.com/api/workers/${this.player}/vacation/send/${worker.id}`, 'POST');
+  }
+
+  cancelVacation(worker: Worker, task: Task): Promise<CancelVacationResponse>{
+    return this.request(`https://game.web-tycoon.com/api/tasks/${this.player}/${task.id}/${worker.id}/cancelVacation`, 'POST');
   }
 
   private async request<T>(url, method, body = null): Promise<T> {

@@ -7,6 +7,7 @@ import { ContentService } from './content.service';
 import { SiteService } from './site.service';
 import { StateService } from './state.service';
 import { TasksService } from './tasks.service';
+import {CancelVacationResponse, SendVacationResponse} from "@tycoon/core";
 
 @injectable()
 export class WorkerService {
@@ -134,4 +135,16 @@ export class WorkerService {
     return this.getAll().find((worker) =>
       this.isIdle(worker) && this.hasSpecialty(worker, specialty));
   }
+
+  sendVacation(worker: Worker): Promise<SendVacationResponse>{
+    return this.api.sendVacation(worker);
+  }
+
+  cancelVacation(worker: Worker): Promise<CancelVacationResponse>{
+    let task = this.getTask(worker);
+    if(task.zone === 'vacation'){
+      return this.api.cancelVacation(worker, task);
+    }
+  }
+
 }
