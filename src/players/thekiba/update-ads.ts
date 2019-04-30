@@ -44,8 +44,8 @@ export class UpdateAdsGame implements GameBehavior {
     const sitesWithFullAds =
       this.domain.site.getAll()
           .filter((site) =>
-            this.domain.site.getAdsCount(site) === 3 ||
-            this.domain.site.hasFindAdTask(site));
+            this.domain.site.getAdsCount(site) === 3 &&
+            !this.domain.site.hasFindAdTask(site));
 
     if (sitesWithFullAds.length === this.domain.site.getAll().length) {
       let sites = this.domain.site.getAll();
