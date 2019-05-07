@@ -53,7 +53,7 @@ export class SiteService {
     requires([ 'asc', 'desc' ].includes(direction), new RangeError('site'));
     requires(byField, new RangeError('byField'));
 
-    return this.state.sites.sort((a, b) =>
+    return this.getAll().sort((a, b) =>
       direction === 'asc' ? a[ byField ] - b[ byField ] : b[ byField ] - a[ byField ]);
   }
 
@@ -132,6 +132,12 @@ export class SiteService {
     return this.getAds(site).length;
   }
 
+  getEnabledAdsCount(site: Site): number {
+    requires(site, new RangeError('site'));
+
+    return this.getAds(site).filter((ad) => this.ad.isEnabled(ad)).length;
+  }
+
   async researchAd(site: Site): Promise<void> {
     requires(site, new RangeError('site'));
 
@@ -160,6 +166,14 @@ export class SiteService {
       //   ]
       // };
     }
+  }
+
+  async moveAd(toSite: Site, ad: Ad): Promise<void> {
+    requires(toSite, new RangeError('site'));
+    requires(ad, new RangeError('ad'));
+
+    await this.ad.cancel(ad);
+    await this.enableAd(toSite, ad);
   }
 
   async changeHosting(site: Site, hosting: 1 | 2 | 3): Promise<void> {
@@ -280,7 +294,7 @@ export class SiteService {
       ...this.state,
       person: {
         ...this.state.person,
-        balanceUsd: this.state.person.balanceUsd - 35000
+        balanceUsd: this.state.person.balanceUsd - 75000
       }
     };
   }

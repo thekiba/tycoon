@@ -49,6 +49,13 @@ export class AdService {
     return { ...ad, ...adData(site, ad) };
   }
 
+  async cancel(ad: Ad): Promise<InitResponse> {
+    requires(ad, new RangeError('ad'));
+
+    await this.api.cancelAd(ad);
+    return this.state;
+  }
+
   async delete(ad: Ad): Promise<InitResponse> {
     requires(ad, new RangeError('ad'));
 

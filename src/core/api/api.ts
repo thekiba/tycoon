@@ -201,6 +201,10 @@ export class Api {
     });
   }
 
+  cancelAd(ad: Ad): Promise<FindAdResponse> {
+    return this.request(`https://game.web-tycoon.com/api/ad_s/${this.player}/${ad.id}/cancel`, 'DELETE');
+  }
+
   deleteAd(ad: Ad): Promise<FindAdResponse> {
     return this.request(`https://game.web-tycoon.com/api/ad_s/${this.player}/${ad.id}/delete`, 'DELETE');
   }
@@ -249,7 +253,7 @@ export class Api {
     console.assert(url, '"url" should be not null');
     console.assert([ 'GET', 'POST', 'DELETE' ].indexOf(method) > -1, '"method" should be GET, POST or DELETE');
     await sleep(1100);
-    return fetch(url + `?access_token=${ this.access_token }&connectionId=CONNECTION_ID{ this.connectionId }&ts=${ Api.ts }`, {
+    return fetch(url + `?access_token=${this.access_token}&connectionId=${this.connectionId}&ts=${Api.ts}`, {
       'credentials': 'include',
       'headers': {
         'accept': 'application/json, text/plain, */*',

@@ -90,7 +90,8 @@ export class WorkerService {
     requires(worker, new RangeError('worker'));
 
     let done: boolean;
-    const workType = this.getSpecialty(worker);
+    // const workType = this.getSpecialty(worker);
+    const workType: Specialty = Specialty[this.getTask(worker).zone];
     switch (workType) {
 
       case Specialty.design:
@@ -127,6 +128,10 @@ export class WorkerService {
       ...this.state,
       tasks: [ ...this.state.tasks, task ]
     };
+  }
+
+  getIdleWorker(): Worker {
+    return this.getAll().find((worker) => this.isIdle(worker));
   }
 
   getAvailableWorkerBySpecialty(specialty: Specialty): Worker {

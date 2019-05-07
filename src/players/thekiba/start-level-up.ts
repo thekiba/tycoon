@@ -15,21 +15,40 @@ export class StartLevelUpGame implements GameBehavior {
 
   async start(): Promise<void> {
     console.log(`
-      Balance: ${this.domain.state.state.person.balanceUsd}\$
+      Balance: \$${ (this.domain.state.state.person.balanceUsd / 100).toFixed(2) }
       Level:   ${this.domain.state.state.person.level}
       Exp:     ${this.domain.state.state.person.score} of ${this.domain.state.state.person.nextScore}
     `);
 
     for (const site of this.domain.site.getAll()) {
+      if (site.hostingId < 3) {
+        console.log(`Hosting till changed to ${3} for site ${site.domain}!`);
+        await this.domain.site.changeHosting(site, 3);
+      }
       if (this.domain.site.canPayForHosting(site)) {
-        if (site.hostingId === 2 && this.domain.state.state.person.balanceUsd > 35000) {
-          console.log(`Payment $350 invoke for ${site.domain} hosting!`);
+        if (site.hostingId === 3 && this.domain.state.state.person.balanceUsd > 75000) {
+          console.log(`Payment $750 invoke for ${site.domain} hosting!`);
           await this.domain.site.payForHosting(site);
         }
       }
       if (this.domain.site.canNormalizeSite(site)) {
         console.log(`Site ${site.domain} has been normalized!`);
         await this.domain.site.normalizeSite(site);
+      }
+    }
+
+
+    for (const worker of this.domain.worker.getAll()) {
+      let task = this.domain.worker.getTask(worker);
+      if (worker.energyValue <= 5) {
+        await this.domain.worker.sendVacation(worker);
+        console.log(`${ worker.name } устал и пошел отдыхать`);
+      }
+      if (worker.energyValue >= 95) {
+        if (task && task.zone === 'vacation') {
+          await this.domain.worker.cancelVacation(worker);
+          console.log(`${ worker.name } почти полон сил! Будет играть на следующем ходу`);
+        }
       }
     }
 
@@ -100,9 +119,9 @@ export class StartLevelUpGame implements GameBehavior {
 
     for (const site of this.domain.site.getAll()) {
       if (this.domain.site.getAdsCount(site) === 3) {
-        // for (const ad of this.domain.site.getDisabledAds(site)) {
-        //   await this.domain.site.enableAd(site, ad);
-        // }
+        for (const ad of this.domain.site.getDisabledAds(site)) {
+          await this.domain.site.enableAd(site, ad);
+        }
 
         // const ads = this.domain.site.getAds(site).map((ad) => ({
         //   ...ad, ...this.domain.ad.getAdStats(site, ad) })
