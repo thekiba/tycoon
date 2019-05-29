@@ -10,6 +10,10 @@ export interface AdStat {
   conversion: number;
 }
 
+export interface AdScore {
+  score: number;
+}
+
 @injectable()
 export class AdService {
   get state(): InitResponse {
@@ -48,6 +52,12 @@ export class AdService {
 
     return { ...ad, ...adData(site, ad) };
   }
+
+  getAdScore(ad: Ad): Ad & AdScore {
+    return { ...ad, score: ad.cpc * ad.ctrBase };
+  }
+
+  // sortAdsByScore(ads: Ad[]):
 
   async cancel(ad: Ad): Promise<InitResponse> {
     requires(ad, new RangeError('ad'));

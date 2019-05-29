@@ -1086,3 +1086,71 @@ function moneyHelperFactory(e, t, n) {
 var forExports = { exports: null };
 moneyHelperFactory(forExports, null, null);
 export const Helpers = forExports.exports;
+
+//
+// const site: any = {
+//   "ad": [
+//     {
+//       "cpc": 42500,
+//       "ctrBase": 1.537309352038361,
+//       "ctrVector": -0.014
+//     }
+//   ],
+//   "sitespeed": [
+//     {
+//       "communityValue": 589.0509833333334,
+//       "communityVector": -15,
+//       "genericValue": 5172,
+//       "genericVector": 0,
+//       "frontRatio": 0.99,
+//       "limit": 25250,
+//       "anno": 40,
+//       "ts": 1558175872448,
+//       "linkValue": 8964,
+//       "linkVector": 0,
+//       "ddosValue": 0
+//     }
+//   ]
+// };
+//
+// const profit = '57,5 $';
+// const ad = site.ad[0];
+//
+// function formatMoney(e) {
+//   const money = e >= 100 ? Math.floor(e) : e;
+//   return parseFloat(money.toFixed(2));
+// }
+//
+// function adData(site: Site, ad: Ad) {
+//   const [ lastSpeed ] = site.sitespeed.reverse();
+//   const bS = new Date().getTime();
+//   var moneyEarned = ad.money
+//     , ctrBase = ad.ctrBase
+//     , ctrVector = ad.ctrVector
+//     , startDate = ad.startDate
+//     , cpc = ad.cpc
+//     , moneyEarned = moneyEarned || 0
+//     , r = {
+//     profitTotal: Math.max(formatMoney(moneyEarned / 100)),
+//     profitPerHour: 0,
+//     conversion: 0
+//   };
+//
+//   var o = {
+//     ctrBase: ctrBase,
+//     ctrVector: ctrVector,
+//     startDate: startDate,
+//     cpc: cpc
+//   };
+//   var c = Helpers.Money.calcMoneyAmountOne(lastSpeed, o, Math.max(bS, lastSpeed.ts));
+//   let result = {
+//     profitTotal: Math.max(formatMoney((moneyEarned + c) / 100), 0),
+//     profitPerHour: formatMoney(Helpers.Money.calcMoneySpeedOne(lastSpeed, o, bS) / 100),
+//     conversion: Helpers.Money.calcCurrentCTR(o, Math.max(bS, 1e3 * startDate)) * Helpers.Money.calcAnnoRatio(lastSpeed.anno)
+//   };
+//   return result;
+// };
+//
+// const stats = adData(site, ad);
+//
+// console.log(stats.profitPerHour)

@@ -18,7 +18,17 @@ export class CreateSitesGame implements GameBehavior {
   async start(): Promise<void> {
     this.state = this.domain.state.state;
 
+    // for (const site of this.domain.site.getAll()) {
+    //   throw new Error('Deleted!');
+    //   await this.domain.site.deleteSite(site);
+    // }
+
     for (const site of this.domain.site.getSortedSites()) {
+      if (this.domain.site.canPayForDomain(site)) {
+        console.log(`Renew domain ${site.domain}!`);
+        await this.domain.site.payForDomain(site, 0);
+      }
+
       if (this.domain.site.getAdsCount(site) < 3 && site.level > 0) {
         if (!this.domain.site.hasFindAdTask(site)) {
           console.log(`Research ad on ${site.domain}`);
@@ -33,14 +43,10 @@ export class CreateSitesGame implements GameBehavior {
     }
 
     {
-      let site: Site;
-      const [ lastSite ] = this.state.sites.sort((a, b) => b.level - a.level);
-      if (lastSite.level === 0 || this.state.sites.length === 50) {
-        site = lastSite;
-      } else {
+      if (this.state.sites.length < 50) {
         const domain = `${ this.config.sitePrefix }${ this.state.sites.length + 1 }${ this.config.sitePostfix }.free`;
         console.log(`Create new site ${domain}`);
-        site = await this.domain.api.createSite(domain) as any;
+        const site = await this.domain.api.createSite(domain) as any;
         this.state.sites.push({ ...site, progress: { backend: 0, marketing: 0, design: 0, frontend: 0, ts: 0 } });
       }
     }

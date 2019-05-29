@@ -21,14 +21,16 @@ export class StartLevelUpGame implements GameBehavior {
     `);
 
     for (const site of this.domain.site.getAll()) {
-      if (site.hostingId < 3) {
-        console.log(`Hosting till changed to ${3} for site ${site.domain}!`);
-        await this.domain.site.changeHosting(site, 3);
+      const HOSTING_ID = 4;
+      const HOSTING_PRICE = 400000;
+      if (site.hostingId < HOSTING_ID) {
+        console.log(`Hosting till changed to ${HOSTING_ID} for site ${site.domain}!`);
+        await this.domain.site.changeHosting(site, HOSTING_ID);
       }
       if (this.domain.site.canPayForHosting(site)) {
-        if (site.hostingId === 3 && this.domain.state.state.person.balanceUsd > 75000) {
-          console.log(`Payment $750 invoke for ${site.domain} hosting!`);
-          await this.domain.site.payForHosting(site);
+        if (site.hostingId === HOSTING_ID && this.domain.state.state.person.balanceUsd > HOSTING_PRICE) {
+          console.log(`Payment ${HOSTING_PRICE/100} invoke for ${site.domain} hosting!`);
+          await this.domain.site.payForHosting(site, HOSTING_PRICE);
         }
       }
       if (this.domain.site.canNormalizeSite(site)) {
@@ -79,7 +81,8 @@ export class StartLevelUpGame implements GameBehavior {
               this.domain.site.getSortedSitesByTraffic()
                   .find((site) =>
                     !this.domain.site.hasActivedContent(site) &&
-                    !this.domain.site.hasDisabledContent(site)
+                    !this.domain.site.hasDisabledContent(site) &&
+                    !this.domain.site.hasSpecialtyTask(site, Specialty.marketing)
                   );
             break;
           }

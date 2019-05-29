@@ -37,6 +37,16 @@ export class SiteService {
     return this.state.extraSites;
   }
 
+  hasSpecialtyTask(site: Site, specialty: Specialty): boolean {
+    requires(site, new RangeError('site'));
+    requires(specialty >= 1 && specialty <= 5, new RangeError('specialty'));
+
+    const tasks = this.state.tasks || [];
+    const workName = Specialty[ specialty ];
+    return !!tasks.find((task) =>
+      task.siteId === site.id && task.zone === workName);
+  }
+
   hasUncompletedWork(site: Site, specialty: Specialty): boolean {
     requires(site, new RangeError('site'));
     requires(specialty >= 1 && specialty <= 5, new RangeError('specialty'));
@@ -47,6 +57,10 @@ export class SiteService {
 
   createSite(domain: string): Promise<CreateSiteResponse> {
     return this.api.createSite(domain);
+  }
+
+  deleteSite(site: Site): Promise<CreateSiteResponse> {
+    return this.api.deleteSite(site);
   }
 
   getSortedSites(direction: 'asc' | 'desc' = 'asc', byField: keyof Site = 'level'): Site[] {
@@ -176,7 +190,7 @@ export class SiteService {
     await this.enableAd(toSite, ad);
   }
 
-  async changeHosting(site: Site, hosting: 1 | 2 | 3): Promise<void> {
+  async changeHosting(site: Site, hosting: 1 | 2 | 3 | 4): Promise<void> {
     requires(site, new RangeError('site'));
     requires(hosting >= 1 && hosting <= 5, new RangeError('hosting'));
     requires(hosting > site.hostingId, new RangeError('hosting'));
@@ -264,13 +278,20 @@ export class SiteService {
       this.getProfitPerUser(b) - this.getProfitPerUser(a));
   }
 
-
   canPayForHosting(site: Site): boolean {
     requires(site, new RangeError('site'));
 
     const current = new Date().getTime() / 1000;
     const tenHours = 60 * 60 * 10;
     return (current + tenHours) > site.hostingPaidTill;
+  }
+
+  canPayForDomain(site: Site): boolean {
+    requires(site, new RangeError('site'));
+
+    const current = new Date().getTime() / 1000;
+    const tenHours = 60 * 60 * 10;
+    return (current + tenHours) > site.domainTill || site.domainStatus === 3;
   }
 
   canNormalizeSite(site: Site): boolean {
@@ -285,16 +306,30 @@ export class SiteService {
     return this.state;
   }
 
-  async payForHosting(site: Site): Promise<InitResponse> {
+  async payForHosting(site: Site, price: number): Promise<InitResponse> {
     requires(site, new RangeError('site'));
-    requires(this.canPayForHosting(site), new RangeError(`Can't pay for site when till greater than 10 hours!`));
+    requires(this.canPayForHosting(site), new RangeError(`Can't pay for site when hosting till greater than 10 hours!`));
 
     await this.api.payForHosting(site);
     return this.state = {
       ...this.state,
       person: {
         ...this.state.person,
-        balanceUsd: this.state.person.balanceUsd - 75000
+        balanceUsd: this.state.person.balanceUsd - price
+      }
+    };
+  }
+
+  async payForDomain(site: Site, price: number): Promise<InitResponse> {
+    requires(site, new RangeError('site'));
+    requires(this.canPayForDomain(site), new RangeError(`Can't pay for site when domain till greater than 10 hours!`));
+
+    await this.api.payForDomain(site);
+    return this.state = {
+      ...this.state,
+      person: {
+        ...this.state.person,
+        balanceUsd: this.state.person.balanceUsd - price
       }
     };
   }

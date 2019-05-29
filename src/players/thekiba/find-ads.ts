@@ -15,51 +15,67 @@ export class FindAdsGame implements GameBehavior {
   ) {}
 
   async start(): Promise<void> {
-    const [ site ] = this.domain.site.getAll();
+    let sites = new Set();
     for (const ad of this.domain.ad.getExtraAll().map(
-      (a) => this.domain.ad.getAdStats(site, a))) {
-      if (ad.importunity > 50) {
+      (a) => this.domain.ad.getAdScore(a))) {
+      if (ad.importunity > 33) {
         await this.domain.ad.delete(ad);
         continue;
       }
 
       const [ worstAd ] =
         this.domain.ad.getAllAds(this.domain.site.getAll())
-            .map((a) => this.domain.ad.getAdStats(site, a))
-            .sort((a, b) => a.profitPerHour - b.profitPerHour);
+            .map((a) => this.domain.ad.getAdScore(a))
+            .sort((a, b) => a.score - b.score);
 
-      if (ad.profitPerHour > worstAd.profitPerHour) {
+      if (ad.score > worstAd.score) {
         const selectedSite = this.domain.site.find(worstAd.siteId);
-        console.info(`Remove worst ad with profit \$${worstAd.profitPerHour} for ${selectedSite.domain}!`);
+        console.info(` Remove worst ad with score ${ worstAd.score } for ${ selectedSite.domain }!`);
         await this.domain.ad.delete(worstAd);
-        console.info(`Enable extra ad with profit \$${ad.profitPerHour} for ${selectedSite.domain}!`);
+        console.info(` Enable extra ad with score ${ ad.score } for ${ selectedSite.domain }!`);
         await this.domain.site.enableAd(selectedSite, ad);
+        console.info(` Increase at ${ ad.score - worstAd.score }!`);
       } else {
-        console.info(`Remove extra ad with profit \$${ad.profitPerHour}!`);
-        await this.domain.ad.delete(ad);
+        const site = this.domain.site.getAll().find((site) =>
+          !sites.has(site.id) && this.domain.site.getAdsCount(site) < 3);
+        if (site) {
+          sites.add(site.id);
+          await this.domain.site.enableAd(site, ad);
+          console.info(` Enable extra ad with score ${ ad.score } for ${ site.domain }!`);
+        } else {
+          console.info(`  Remove extra ad with score ${ ad.score }!`);
+          await this.domain.ad.delete(ad);
+        }
       }
+      console.info(` `);
     }
 
     const extraAds = this.domain.ad.getExtraAll();
     const extraAdsIds = extraAds.map((a) => a.siteId);
     for (const site of this.domain.site.getExtraAll()) {
       if (!extraAdsIds.includes(site.id)) {
-        console.info(`Starting research ad of site ${site.domain}!`);
+        console.info(`Starting research ad of site ${ site.domain }!`);
         await this.domain.site.researchAd(site);
       }
     }
 
     for (const site of this.domain.site.getAll()) {
+      // if (this.domain.site.getAdsCount(site) === 4) {
+      //   const [ ad ] = this.domain.site.getAds(site).reverse();
+      //   console.info(`Remove 4 ad for ${ site.domain }!`);
+      //   await this.domain.ad.delete(ad);
+      // }
+
       if (this.domain.site.getAdsCount(site) === 3) {
         for (const ad of this.domain.site.getDisabledAds(site)) {
-          console.info(`Enable disabled ad for ${site.domain}!`);
+          console.info(`Enable disabled ad for ${ site.domain }!`);
           await this.domain.site.enableAd(site, ad);
         }
       }
 
       if (this.domain.site.getAdsCount(site) < 3) {
         if (!this.domain.site.hasFindAdTask(site)) {
-          console.info(`Find ad for own site ${site.domain}!`);
+          console.info(`Find ad for own site ${ site.domain }!`);
           await this.domain.site.researchAd(site);
         }
       }

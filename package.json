@@ -21,8 +21,10 @@
     "ws": "^6.2.1"
   },
   "devDependencies": {
+    "@swc/core": "^1.0.42",
     "@types/node": "^11.13.5",
     "reflect-metadata": "^0.1.13",
+    "swc-loader": "^0.1.6",
     "ts-loader": "^5.3.3",
     "ts-node": "^8.1.0",
     "tsconfig-paths": "^3.8.0",

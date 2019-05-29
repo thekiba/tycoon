@@ -63,6 +63,9 @@ var fetch = fetch ? fetch : require('node-fetch');
 // fetch("https://game.web-tycoon.com/api/sites/PLAYER_ID/5cb6202014b57b25f13b75d2/levelUp?access_token=ACCESS_TOKEN&connectionId=CONNECTION_ID&ts=1555440379921",
 // {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/PLAYER_ID/sites/5cb6202014b57b25f13b75d2","referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"POST","mode":"cors"});
 
+// удалить сайт
+// fetch("https://game.web-tycoon.com/api/sites/5cce9d818091027bd5e75498/5ccea65010c6967b9195b5b3?access_token=lpej4lnrnhAiAYZtAvcaKyxT7bYmh17iuh25uTVH40c9gFoxExiowljNpApXAvct&connectionId=a513087e8747cbf46d55d5b4293cf4ae&ts=1557725473295", {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/5cce9d818091027bd5e75498/sites","referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"DELETE","mode":"cors"});
+
 // поиск рекламы
 // fetch("https://game.web-tycoon.com/api/ad_s/ad/PLAYER_ID/generateOffers/5cb6202014b57b25f13b75d2/1?access_token=ACCESS_TOKEN&connectionId=CONNECTION_ID&ts=1555440683971", {"credentials":"include","headers":{"accept":"application/json, text/plain, */*","accept-language":"en,ru;q=0.9","cache-control":"no-cache","pragma":"no-cache"},"referrer":"https://game.web-tycoon.com/players/PLAYER_ID/sites/5cb6202014b57b25f13b75d2","referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"POST","mode":"cors"});
 
@@ -187,6 +190,10 @@ export class Api {
     });
   }
 
+  deleteSite(site: Site): Promise<CreateSiteResponse> {
+    return this.request(`https://game.web-tycoon.com/api/sites/${ this.player }/${ site.id }`, 'DELETE');
+  }
+
   levelUpSite(site: Site): Promise<LevelUpSiteResponse> {
     return this.request(`https://game.web-tycoon.com/api/sites/${ this.player }/${ site.id }/levelUp`, 'POST');
   }
@@ -221,7 +228,7 @@ export class Api {
     return this.request(`https://game.web-tycoon.com/api/content/${ this.player }/${ site.id }/${ content.id }`, 'POST');
   }
 
-  changeHosting(site: Site, hosting: 1 | 2 | 3): Promise<FindAdResponse> {
+  changeHosting(site: Site, hosting: 1 | 2 | 3 | 4): Promise<FindAdResponse> {
     return this.request(`https://game.web-tycoon.com/api/hostings/${this.player}/${hosting}/change`, 'POST', {
       siteId: site.id
     });
@@ -229,6 +236,10 @@ export class Api {
 
   payForHosting(site: Site): Promise<FindAdResponse> {
     return this.request(`https://game.web-tycoon.com/api/hostings/${this.player}/${site.id}/payInAdvance`, 'POST');
+  }
+
+  payForDomain(site: Site): Promise<FindAdResponse> {
+    return this.request(`https://game.web-tycoon.com/api/domains/${this.player}/${site.id}/payInAdvance`, 'POST');
   }
 
   normalizeSite(site: Site): Promise<FindAdResponse> {
